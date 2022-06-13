@@ -13,8 +13,8 @@ public class UserManager {
 
     private static UserManager instance;
 
-    private UserTable usersDB = DB.getUserTable();
-    private MarkTable markDB = DB.getMarkTable();
+    public UserTable usersDB = DB.getUserTable();
+    public MarkTable markDB = DB.getMarkTable();
 
     private UserManager() throws Exception {}
 
@@ -26,6 +26,7 @@ public class UserManager {
         System.out.println("5. Users Marks");
         System.out.println("6. User Marks");
         System.out.println("7. Add Mark");
+        System.out.println("8. Quit");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -51,7 +52,8 @@ public class UserManager {
         else
         if(option.equals("7"))
             addMark(Integer.parseInt(scanner.next()), scanner.next(), Integer.parseInt(scanner.next()));
-
+        else
+            return;
         startSelector();
     }
 
