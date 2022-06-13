@@ -1,5 +1,8 @@
-import db.DB;
-import db.UserDB;
+import db.mark.MarkTable;
+import db.mark.MarkTableImpl;
+import db.user.UserTable;
+import db.user.UserTableImpl;
+import model.Mark;
 import model.User;
 
 import java.util.Scanner;
@@ -8,7 +11,8 @@ public class UserManager {
 
     private static UserManager instance;
 
-    private UserDB usersDB = DB.getInstance();
+    private UserTable usersDB = UserTableImpl.getInstance();
+    private MarkTable markDB = MarkTableImpl.getInstance();
 
     private UserManager() throws Exception {}
 
@@ -17,6 +21,8 @@ public class UserManager {
         System.out.println("2. Get Users");
         System.out.println("3. Get User");
         System.out.println("4. Delete User");
+        System.out.println("5. Users Marks");
+        System.out.println("6. User Marks");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -34,7 +40,25 @@ public class UserManager {
         if(option.equals("4"))
             deleteUser(Integer.parseInt(scanner.next()));
         else
+        if(option.equals("5"))
+            usersMarks();
+        else
+        if(option.equals("6"))
+            userMarks(Integer.parseInt(scanner.next()));
+        else
             startSelector();
+    }
+
+    private void userMarks(int id){
+        for(Mark mark: markDB.getMarksForUserId(id)){
+            System.out.println(mark);
+        }
+    }
+
+    private void usersMarks(){
+        for(Mark mark: markDB.getMarks()){
+            System.out.println(mark);
+        }
     }
 
     private void deleteUser(int id) {

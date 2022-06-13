@@ -1,8 +1,5 @@
 package model;
 
-import db.UserDB;
-
-import java.util.ArrayList;
 import java.util.Random;
 
 public class User {
@@ -33,7 +30,7 @@ public class User {
 
     @Override
     public String toString(){
-        return this.name+" "+this.id;
+        return this.name+" id="+this.id;
     }
 }
 
