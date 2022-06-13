@@ -1,3 +1,4 @@
+import db.DB;
 import db.mark.MarkTable;
 import db.mark.MarkTableImpl;
 import db.user.UserTable;
@@ -5,24 +6,26 @@ import db.user.UserTableImpl;
 import model.Mark;
 import model.User;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class UserManager {
 
     private static UserManager instance;
 
-    private UserTable usersDB = UserTableImpl.getInstance();
-    private MarkTable markDB = MarkTableImpl.getInstance();
+    private UserTable usersDB = DB.getUserTable();
+    private MarkTable markDB = DB.getMarkTable();
 
     private UserManager() throws Exception {}
 
-    public void startSelector(){
+    public void startSelector() throws SQLException {
         System.out.println("\n1. Add User");
         System.out.println("2. Get Users");
         System.out.println("3. Get User");
         System.out.println("4. Delete User");
         System.out.println("5. Users Marks");
         System.out.println("6. User Marks");
+        System.out.println("7. Add Mark");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -45,7 +48,15 @@ public class UserManager {
         else
         if(option.equals("6"))
             userMarks(Integer.parseInt(scanner.next()));
+        else
+        if(option.equals("7"))
+            addMark(Integer.parseInt(scanner.next()), scanner.next(), Integer.parseInt(scanner.next()));
+
         startSelector();
+    }
+
+    private void addMark(int userId, String lessonName, int mark) throws SQLException {
+        markDB.addMark(new Mark(new User(userId, null), lessonName, mark));
     }
 
     private void userMarks(int id){

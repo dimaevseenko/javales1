@@ -65,4 +65,14 @@ public class MarkTableImpl extends DB implements MarkTable {
         }
         return marks;
     }
+
+    @Override
+    public void addMark(Mark mark) {
+        String query = String.format("insert into marks(userId, lessonName, mark) values(%d, '%s', %d)", mark.getUser().getId(), mark.getLessonName(), mark.getMark());
+        try(Statement stmt = connection.createStatement()) {
+            stmt.execute(query);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
 }

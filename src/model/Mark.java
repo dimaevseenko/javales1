@@ -11,6 +11,12 @@ public class Mark {
         this.mark = mark;
     }
 
+    public Mark(User user, String lessonName, int mark) {
+        this.user = user;
+        this.lessonName = lessonName;
+        this.mark = mark;
+    }
+
     public int getId() {
         return id;
     }
