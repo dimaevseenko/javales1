@@ -45,8 +45,7 @@ public class UserManager {
         else
         if(option.equals("6"))
             userMarks(Integer.parseInt(scanner.next()));
-        else
-            startSelector();
+        startSelector();
     }
 
     private void userMarks(int id){
@@ -64,19 +63,16 @@ public class UserManager {
     private void deleteUser(int id) {
         usersDB.removeUser(id);
         getUsers();
-        startSelector();
     }
 
     private void getUser(int id) {
         System.out.println(usersDB.getUser(id));
-        startSelector();
     }
 
     private void getUsers() {
         for (User user : usersDB.getUsers()) {
             System.out.println(user);
         }
-        startSelector();
     }
 
     private void addUser(String name) {
