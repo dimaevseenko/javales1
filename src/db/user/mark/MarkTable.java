@@ -1,4 +1,4 @@
-package db.mark;
+package db.user.mark;
 
 import model.Mark;
 import model.Marks;

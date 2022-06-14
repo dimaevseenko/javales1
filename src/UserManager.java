@@ -1,10 +1,7 @@
-import db.UserDB;
-import db.mark.MarkTable;
-import db.user.UserTable;
+import db.user.UserDB;
 import model.Mark;
 import model.User;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class UserManager {
@@ -29,28 +26,32 @@ public class UserManager {
 
         String option = scanner.next();
 
-        if(option.equals("1"))
-            addUser(scanner.next());
-        else
-        if(option.equals("2"))
-            getUsers();
-        else
-        if(option.equals("3"))
-            getUser(Integer.parseInt(scanner.next()));
-        else
-        if(option.equals("4"))
-            deleteUser(Integer.parseInt(scanner.next()));
-        else
-        if(option.equals("5"))
-            usersMarks();
-        else
-        if(option.equals("6"))
-            userMarks(Integer.parseInt(scanner.next()));
-        else
-        if(option.equals("7"))
-            addMark(Integer.parseInt(scanner.next()), scanner.next(), Integer.parseInt(scanner.next()));
-        else
-            return;
+        switch (option){
+            case "1":
+                addUser(scanner.next());
+                break;
+            case "2":
+                getUsers();
+                break;
+            case "3":
+                getUser(Integer.parseInt(scanner.next()));
+                break;
+            case "4":
+                deleteUser(Integer.parseInt(scanner.next()));
+                break;
+            case "5":
+                usersMarks();
+                break;
+            case "6":
+                userMarks(Integer.parseInt(scanner.next()));
+                break;
+            case "7":
+                addMark(Integer.parseInt(scanner.next()), scanner.next(), Integer.parseInt(scanner.next()));
+                break;
+            default:
+                return;
+        }
+
         startSelector();
     }
 

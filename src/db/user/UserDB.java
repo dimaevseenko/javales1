@@ -1,10 +1,8 @@
-package db;
+package db.user;
 
-import db.mark.MarkTable;
-import db.mark.MarkTableImpl;
-import db.user.UserTable;
-import db.user.UserTableImpl;
-import model.User;
+import db.DBConfig;
+import db.user.mark.MarkTable;
+import db.user.mark.MarkTableImpl;
 
 import java.sql.*;
 
@@ -15,11 +13,10 @@ public class UserDB {
     private static UserDB instance;
 
     private UserDB() throws Exception {
-        if (connect(DBConfig.getDBEvseenkoConfig().get("host"),
+        connect(DBConfig.getDBEvseenkoConfig().get("host"),
                 DBConfig.getDBEvseenkoConfig().get("name"),
                 DBConfig.getDBEvseenkoConfig().get("user"),
-                DBConfig.getDBEvseenkoConfig().get("password")) == null)
-            return;
+                DBConfig.getDBEvseenkoConfig().get("password"));
     }
 
     protected Connection connect(String host, String dbName, String dbUser, String dbPassword) throws Exception {
