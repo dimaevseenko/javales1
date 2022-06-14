@@ -1,8 +1,6 @@
-import db.DB;
+import db.UserDB;
 import db.mark.MarkTable;
-import db.mark.MarkTableImpl;
 import db.user.UserTable;
-import db.user.UserTableImpl;
 import model.Mark;
 import model.User;
 
@@ -13,12 +11,11 @@ public class UserManager {
 
     private static UserManager instance;
 
-    public UserTable usersDB = DB.getUserTable();
-    public MarkTable markDB = DB.getMarkTable();
+    private UserDB userDB = UserDB.getInstance();
 
     private UserManager() throws Exception {}
 
-    public void startSelector() throws SQLException {
+    public void startSelector() throws Exception {
         System.out.println("\n1. Add User");
         System.out.println("2. Get Users");
         System.out.println("3. Get User");
@@ -57,39 +54,39 @@ public class UserManager {
         startSelector();
     }
 
-    private void addMark(int userId, String lessonName, int mark) throws SQLException {
-        markDB.addMark(new Mark(new User(userId, null), lessonName, mark));
+    private void addMark(int userId, String lessonName, int mark) throws Exception {
+        userDB.getMarkTable().addMark(new Mark(new User(userId, null), lessonName, mark));
     }
 
-    private void userMarks(int id){
-        for(Mark mark: markDB.getMarksForUserId(id)){
+    private void userMarks(int id) throws Exception {
+        for(Mark mark: userDB.getMarkTable().getMarksForUserId(id)){
             System.out.println(mark);
         }
     }
 
-    private void usersMarks(){
-        for(Mark mark: markDB.getMarks()){
+    private void usersMarks() throws Exception {
+        for(Mark mark: userDB.getMarkTable().getMarks()){
             System.out.println(mark);
         }
     }
 
-    private void deleteUser(int id) {
-        usersDB.removeUser(id);
+    private void deleteUser(int id) throws Exception {
+        userDB.getUserTable().removeUser(id);
         getUsers();
     }
 
-    private void getUser(int id) {
-        System.out.println(usersDB.getUser(id));
+    private void getUser(int id) throws Exception {
+        System.out.println(userDB.getUserTable().getUser(id));
     }
 
-    private void getUsers() {
-        for (User user : usersDB.getUsers()) {
+    private void getUsers() throws Exception {
+        for (User user : userDB.getUserTable().getUsers()) {
             System.out.println(user);
         }
     }
 
-    private void addUser(String name) {
-        usersDB.addUser(new User(name));
+    private void addUser(String name) throws Exception {
+        userDB.getUserTable().addUser(new User(name));
         getUsers();
     }
 

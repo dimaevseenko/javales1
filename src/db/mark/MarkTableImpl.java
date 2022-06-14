@@ -1,24 +1,26 @@
 package db.mark;
 
-import db.DB;
 import db.user.UserTableImpl;
 import model.Mark;
 import model.Marks;
 import model.User;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MarkTableImpl extends DB implements MarkTable {
+public class MarkTableImpl implements MarkTable {
 
     private static MarkTableImpl instance;
+    private Connection connection;
 
-    private MarkTableImpl() throws Exception {}
+    private MarkTableImpl(Connection connection) throws Exception {
+        this.connection = connection;
+    }
 
-    public static MarkTableImpl getInstance() throws Exception {
+    public static MarkTableImpl getInstance(Connection connection) throws Exception {
         if(instance == null)
-            instance = new MarkTableImpl();
+            instance = new MarkTableImpl(connection);
         return instance;
     }
 
@@ -29,7 +31,7 @@ public class MarkTableImpl extends DB implements MarkTable {
         try(Statement stmt = connection.createStatement()) {
             ResultSet marksResult = stmt.executeQuery(query);
             while (marksResult.next()){
-                User user = UserTableImpl.getInstance().getUser(marksResult.getInt("userId"));
+                User user = UserTableImpl.getInstance(connection).getUser(marksResult.getInt("userId"));
 
                 marks.add(new Mark(
                         marksResult.getInt("id"),
@@ -51,7 +53,7 @@ public class MarkTableImpl extends DB implements MarkTable {
         try(Statement stmt = connection.createStatement()) {
             ResultSet marksResult = stmt.executeQuery(query);
             while (marksResult.next()){
-                User user = UserTableImpl.getInstance().getUser(marksResult.getInt("userId"));
+                User user = UserTableImpl.getInstance(connection).getUser(marksResult.getInt("userId"));
 
                 marks.add(new Mark(
                         marksResult.getInt("id"),

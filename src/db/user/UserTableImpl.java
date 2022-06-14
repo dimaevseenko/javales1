@@ -1,18 +1,21 @@
 package db.user;
 
-import db.DB;
 import model.User;
 import model.Users;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class UserTableImpl extends DB implements UserTable {
+public class UserTableImpl implements UserTable {
 
     private static UserTableImpl instance;
+    private Connection connection;
 
-    private UserTableImpl() throws Exception {}
+    private UserTableImpl(Connection connection) throws Exception {
+        this.connection = connection;
+    }
 
     @Override
     public void addUser(User user) {
@@ -72,9 +75,9 @@ public class UserTableImpl extends DB implements UserTable {
         }
     }
 
-    public static UserTableImpl getInstance() throws Exception {
+    public static UserTableImpl getInstance(Connection connection) throws Exception {
         if(instance == null)
-            instance = new UserTableImpl();
+            instance = new UserTableImpl(connection);
         return instance;
     }
 }
